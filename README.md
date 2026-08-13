@@ -17,6 +17,7 @@ Hey all. This is a brief explainer on how to get to a usable TS development envi
 
 - Since you've successfully gotten the code to compile, now we can mess around with some stuff. It is recommended you use [VSCode](https://code.visualstudio.com/download) for editing due to its excellent TypeScript support. Once you install VSCode, open it and select the folder with the repository in it. You can also open a terminal within VSCode to save clicks by pressing `ctrl+shift+\`. For extra credit, you can install some very helpful VS Code extensions: [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode). If you install the latter, your code will auto-format on save!
 - A helpful command within `yarn` is `yarn init`. This is useful for changing details about the package without needing to manually muck around `packages.json` and hoping you changed everything correctly. Call `yarn init` now, and provide a cool name for your package (without any spaces). You will be then asked further questions like what version of the package this is, a description of said package and so on. You can skip any you don't feel like answering by pressing enter.
+- Change the main script name in `webpack.config.js` by setting the entry point name to something else instead of `main-script-name`.  You probably want to use the cool name you just gave `yarn init`, but you don't have to.
 - Rather than be stuck running `yarn run build` every time you make an edit, you can instead call `yarn watch` before you begin working on your code. This process will keep running, and automatically build your code for you whenever you save your file. Convenient!
 - Let's modify the code a little bit. The TS code that created the JS file you just ran lives in `src/main.ts` within the repository. At build, all this code does is tell you how much MP you have relative to the number 200; let's change the print statement to add your name in here. Modify `main.ts` to include the following, changing `"[NAME]"` to your name.:
 
@@ -37,7 +38,7 @@ export function main(): void {
 ```
 
 - Rather than manually copying the files every time you build your package, you can create a symlink that will let KoLMafia see the files in your repository folder. Keep in mind that you cannot do `./` completion with symlinks; you need to explicitly list out the entire file path. My symlink command on Mac OS was the following: `ln -s "$PWD/KoLmafia/scripts/PACKAGE_NAME ~/Library/Application\ Support/KoLmafia/scripts/` -- Windows and Linux users may need a different approach.
-- Once you make the symlink, you can call `PACKAGE_NAME/main-script-name.js` from the KoLMafia GCLI. Neat!
+- Once you make the symlink, you can call `PACKAGE_NAME/main-script-name.js` from the KoLMafia GCLI. Neat! (If you changed the main script name in `webpack.config.js` above, you will need to use whatever you changed it to; you might still see a literal `main-script-name.js`, but it's left over from before you changed the name and it won't be updated by `yarn run build` anymore.)
 
 ## PART THREE - WHAT ARE ALL THESE FILES FOR
 
