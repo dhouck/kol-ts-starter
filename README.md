@@ -2,6 +2,8 @@
 
 Hey all. This is a brief explainer on how to get to a usable TS development environment for KoLMafia. Ideally, this will cover everything you need to make a sample JavaScript mafia script. This was written by a TS novice, so hopefully it properly enumerates everything you need to do to get an environment up and running!
 
+If you know the basics of how TypeScript works and just want to use this repository as a template, see [CHECKLIST.md](CHECKLIST.md) for what you need to change to get your project started.
+
 ## PART ONE - BABY'S FIRST TS COMPILATION
 
 - **STEP 1:** Download Node.js / NPM. This will allow you to install babel/webpack and set up a compiler. To download, visit [the latest node.js build](https://nodejs.org/en/). Then install the package manager, `yarn`, by opening a [terminal](https://www.ionos.com/help/email/troubleshooting-mail-basicmail-business/access-the-command-prompt-or-terminal/) and typing: `npm install -g yarn`. Think of this like immediately installing Chrome or Firefox on a new computer instead of using Internet Explorer.
