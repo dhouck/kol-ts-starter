@@ -94,3 +94,7 @@ If you're going to commit your project to a repository such as GitHub, you don't
 __.vscode__
 
 The files within this folder tell the [Visual Studio Code](https://code.visualstudio.com/) editor to automatically run ESLint and Prettier when saving files. If you aren't using this editor, then they don't do anything.
+
+__.github__
+
+These files tell GitHub to do special things with the repository.  The `.github/workflows` directory can tell it to automatically do things for every pull request, push, or other trigger; currently, there are files there to automatically compile the project and push a `release` branch so that you can run `git checkout YOURNAME/YOURPROJECT release` to get the latest version of your script.  This folder also supports settings like a template for people to fill out when they want to make an issue or pull request.
