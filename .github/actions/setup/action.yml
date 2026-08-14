@@ -1,0 +1,30 @@
+# A GitHub action is one component of a workflow; this does not do anything on its own; workflows
+# call actions when they want to get things done.
+
+name: "Setup project"
+description: "Check out the project and set up Node, Yarn, dependencies, etc."
+# We need to get the Node version from the workflow
+inputs:
+  node-version:
+    description: "The version of Node.js to use"
+    required: true
+# This action does not have any outputs
+runs:
+  using: "composite" # This is a composite action (one action that does several sub-actions)
+  steps:
+    # Get access to NPM Corepack, including later Yarn versions
+    - name: Enable corepack
+      run: corepack enable
+      shell: bash
+
+    # Set up the correct version of node.js
+    - name: Use Node.js ${{ inputs.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    # Install the project dependencies
+    - name: Install dependencies
+      run: yarn install --immutable
+      shell: bash
+# The project is now ready to lint, build, test, etc.
