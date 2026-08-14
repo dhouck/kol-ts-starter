@@ -1,5 +1,8 @@
 name: Build and deploy
 
+# When to run build and deployment: on any push to main, pull request targetting main,
+# or manually telling GitHub to run the workflow.
+# We don't want to deploy on a PR; we handle that later.
 on:
   push:
     branches: [main]
@@ -7,11 +10,14 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# The build environment: which version of Node to use and where the output is
 env:
-  build-path: "KoLmafia"
+  build-path: "KoLmafia" # Given in webpack.config.js in modules.exports.output.path
   node-version: "22"
 
+# What the various parts of building and deploying look like
 jobs:
+  # Test that the script builds
   testBuild:
     runs-on: ubuntu-latest
     steps:
@@ -30,6 +36,7 @@ jobs:
       - name: Build
         run: yarn run build
 
+  # Lint the script (check for common errors and code smells)
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -48,10 +55,11 @@ jobs:
       - name: Linting
         run: yarn run lint
 
+  # Deploy the compiled code to the release branch
   deploy:
     runs-on: ubuntu-latest
-    needs: [testBuild, lint]
-    if: github.ref == 'refs/heads/main'
+    needs: [testBuild, lint] # Only deploy if we pass these checks
+    if: github.ref == 'refs/heads/main' # Only deploy the main branch
     permissions:
       contents: "write" # We need to write to the repository to deploy
     steps:
@@ -73,9 +81,9 @@ jobs:
       - name: Push to Release
         uses: s0/git-publish-subdir-action@develop
         env:
-          REPO: self
-          BRANCH: release
-          FOLDER: ${{ env.build-path }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MESSAGE: "Build: ({sha}) {msg}"
+          REPO: self # We deploy to our own repo
+          BRANCH: release # The branch to deploy to
+          FOLDER: ${{ env.build-path }} # The folder to push to the new branch
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Automatically given to workflows to let them do stuff to the repo
+          MESSAGE: "Build: ({sha}) {msg}" # The commit message for the release branch commit
           SKIP_EMPTY_COMMITS: true
